@@ -4,8 +4,10 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -20,12 +22,12 @@ public class Respuesta {
 	private String mensaje;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_topico")
+	@JoinColumn(name = "id_topico", foreignKey = @ForeignKey(name = "FK_RESPUESTA_TOPICO"))
 	private Topico topico;
 
 	private LocalDateTime fechaCreacion = LocalDateTime.now();
 
-	@OneToMany(mappedBy = "respuesta")
+	@OneToMany(mappedBy = "respuesta",cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Usuario> autor = new ArrayList<>();
 	private Boolean solucion = false;
 

@@ -3,26 +3,36 @@ package com.alura.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Curso {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idCurso;
+
+	@NotNull
+    @Size(min = 3, message = "Se requiere el nombre")
 	private String nombre;
 	private String categoria;
 
-	@OneToMany(mappedBy = "curso")
+	@OneToMany(mappedBy = "curso",cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Topico> topicos = new ArrayList<>();
 
-	public Curso(String nombre, String categoria) {
-		this.nombre = nombre;
-		this.categoria = categoria;
-	}
 	
 	@Override
 	public int hashCode() {
@@ -49,28 +59,5 @@ public class Curso {
 		return true;
 	}
 
-	public Long getId() {
-		return idCurso;
-	}
-
-	public void setId(Long idCurso) {
-		this.idCurso = idCurso;
-	}
-
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-	public String getCategoria() {
-		return categoria;
-	}
-
-	public void setCategoria(String categoria) {
-		this.categoria = categoria;
-	}
 
 }

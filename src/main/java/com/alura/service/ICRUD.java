@@ -9,7 +9,7 @@ public interface ICRUD<T,ID> {
 
     T save(T t);
 
-    T update(ID id, T t);
+    T update( T t, ID id);
 
     void delete(ID id);
 }
