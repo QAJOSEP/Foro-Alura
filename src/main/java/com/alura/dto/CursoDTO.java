@@ -1,10 +1,10 @@
 package com.alura.dto;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.alura.model.Topico;
 
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -24,6 +24,7 @@ public class CursoDTO {
 
 	private String categoria;
     
-    private List<Topico> topicos = new ArrayList<>();
+    @OneToMany(mappedBy = "curso")
+    private List<Topico> topicos;
 
 }

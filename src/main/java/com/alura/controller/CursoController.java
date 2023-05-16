@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 
@@ -44,10 +43,12 @@ public class CursoController {
     @GetMapping(value="/hateoas/{id}")
     public EntityModel<CursoDTO> findByHateoas(@PathVariable Long id) {
         EntityModel<CursoDTO> resource = EntityModel.of(this.convertToDto(ser.findById(id)));
+        
         WebMvcLinkBuilder link1 = linkTo(methodOn(this.getClass()).findByHateoas(id));
         WebMvcLinkBuilder link2 = linkTo(methodOn(RespuestaController.class).listarTodo());
         resource.add(link1.withRel("curso-info1"));
         resource.add(link2.withRel("curso-info1"));
+
         return resource;
     }
     
